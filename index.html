@@ -20,28 +20,28 @@
     <header id="topbar">
       <div class="brand">
         <span class="title">ACCORD&nbsp;1936</span>
-        <span class="subtitle">working title</span>
+        <span id="hud-nation" class="subtitle"></span>
+      </div>
+      <div class="hud-stats">
+        <span id="hud-treasury" title="Treasury"></span>
+        <span id="hud-capital" title="Political capital"></span>
+        <span id="hud-stability" title="Stability"></span>
+        <span id="hud-standing" title="Standing"></span>
+        <span id="hud-tension" title="World tension"></span>
+        <span id="hud-offers" class="badge" title="Awaiting your answer"></span>
       </div>
       <div class="turn-controls">
-        <span id="date">January 1936</span>
+        <span id="date"></span>
         <button id="end-turn">End Turn ▸</button>
       </div>
     </header>
 
-    <section id="panel" class="hidden">
-      <button id="panel-close" aria-label="Close">×</button>
-      <div class="panel-head">
-        <span id="panel-swatch"></span>
-        <div>
-          <h2 id="panel-name"></h2>
-          <p id="panel-leader"></p>
-        </div>
-      </div>
-      <div class="panel-stats" id="panel-stats"></div>
-      <p class="panel-note" id="panel-note"></p>
-    </section>
+    <div id="map-modes"></div>
+    <nav id="nav"></nav>
 
-    <div id="digest" class="hidden"></div>
+    <section id="panel" class="hidden"></section>
+    <div id="modal" class="hidden"></div>
+    <div id="toast" class="hidden"></div>
 
     <script type="module" src="/src/main.ts"></script>
   </body>
