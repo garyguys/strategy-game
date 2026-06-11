@@ -149,10 +149,20 @@ your own government, party, and family from turning on you.
 | v2 | Espionage, congresses, parliament/factions, focus trees, more nations |
 | v3 | Full world map, async multiplayer, mod/scenario support |
 
-## Open Questions
+## Decisions (locked 2026-06-11)
 
-1. Historical-real vs. fictional alt-history setting? (Doc assumes fictional.)
-2. Single-player only at launch, or design for async MP from day one?
-3. Art direction — stylized paper-map look (cheap, readable, scales well) vs.
-   terrain realism?
-4. Engine: web stack (TS + PixiJS) vs. Godot 4?
+1. **Setting:** real countries, 1936 start, historical borders — but every
+   leader, minister, and rival is a **fictional character**, freeing the
+   narrative writing from real-figure constraints.
+2. **Single-player only.** No multiplayer planned.
+3. **Art direction:** stylized paper/parchment map — muted fills, sepia
+   borders, serif small-caps labels.
+4. **Engine:** web stack — TypeScript + Vite + PixiJS (WebGL), PWA for mobile,
+   wrappable in Tauri/Electron for desktop later.
+5. **Working title:** *Accord 1936* (placeholder, easy to change).
+6. **Map data:** 1938 world borders from the open
+   [historical-basemaps](https://github.com/aourednik/historical-basemaps)
+   dataset (closest available year to 1936; border precision is approximate).
+7. **MVP playable nations:** Czechoslovakia, Sweden, Turkey — mid-powers whose
+   survival depends on diplomacy and trade rather than conquest, which is the
+   game's thesis.

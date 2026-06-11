@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="theme-color" content="#e7ddc4" />
+    <title>Accord 1936</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <header id="topbar">
+      <div class="brand">
+        <span class="title">ACCORD&nbsp;1936</span>
+        <span class="subtitle">working title</span>
+      </div>
+      <div class="turn-controls">
+        <span id="date">January 1936</span>
+        <button id="end-turn">End Turn ▸</button>
+      </div>
+    </header>
+
+    <section id="panel" class="hidden">
+      <button id="panel-close" aria-label="Close">×</button>
+      <div class="panel-head">
+        <span id="panel-swatch"></span>
+        <div>
+          <h2 id="panel-name"></h2>
+          <p id="panel-leader"></p>
+        </div>
+      </div>
+      <div class="panel-stats" id="panel-stats"></div>
+      <p class="panel-note" id="panel-note"></p>
+    </section>
+
+    <div id="digest" class="hidden"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
