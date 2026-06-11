@@ -95,6 +95,8 @@ function runContracts(state: GameState): void {
       const to = state.nations[clause.to];
       if (!from?.alive || !to?.alive) continue;
       if (clause.type === 'resourceContract' && clause.good && clause.qty) {
+        // R5 — embargoes suspend deliveries between the parties
+        if (from.embargoes.includes(to.id) || to.embargoes.includes(from.id)) continue;
         const sent = Math.min(clause.qty, from.stockpiles[clause.good]);
         from.stockpiles[clause.good] -= sent;
         to.stockpiles[clause.good] += sent;
@@ -130,7 +132,9 @@ function runMarket(state: GameState): void {
     const mods = nationMods(nation);
     const blockaded = isBlockaded(state, nation);
     const strangled = straitsClosedAgainst(state, nation);
-    const accessPenalty = (blockaded ? BAL.blockadeImportCut : 0) + (strangled ? 0.35 : 0);
+    // R5 — each major power embargoing this nation squeezes its market access
+    const embargoedBy = Object.values(state.nations).filter((m) => m.alive && m.major && m.embargoes.includes(nation.id)).length;
+    const accessPenalty = (blockaded ? BAL.blockadeImportCut : 0) + (strangled ? 0.35 : 0) + embargoedBy * 0.12;
     const isPlayer = nation.id === state.playerId;
 
     let tariffIncome = 0;
@@ -181,7 +185,8 @@ function runMarket(state: GameState): void {
 export function marketOrder(state: GameState, nation: NationState, good: Good, qty: number): string | null {
   const price = state.market.prices[good];
   if (qty > 0) {
-    const access = 1 - (isBlockaded(state, nation) ? BAL.blockadeImportCut : 0) - (straitsClosedAgainst(state, nation) ? 0.35 : 0);
+    const embargoedBy = Object.values(state.nations).filter((m) => m.alive && m.major && m.embargoes.includes(nation.id)).length;
+    const access = 1 - (isBlockaded(state, nation) ? BAL.blockadeImportCut : 0) - (straitsClosedAgainst(state, nation) ? 0.35 : 0) - embargoedBy * 0.12;
     const real = Math.min(qty, qty * Math.max(0.1, access));
     const cost = real * price;
     if (nation.treasury < cost) return 'The treasury cannot cover this order.';

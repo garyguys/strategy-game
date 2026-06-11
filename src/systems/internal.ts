@@ -110,6 +110,26 @@ export function runInternal(state: GameState, rng: Rng): void {
       if (open.length) nation.agenda.current = open[Math.floor(rng.next() * open.length)].id;
     }
 
+    // I9 — corporations & unions lobby: loyal magnates pay off, estranged ones fund the opposition
+    for (const c of Object.values(state.characters)) {
+      if (c.nationId !== nation.id || !c.alive || (c.role !== 'magnate' && c.role !== 'union')) continue;
+      if (c.loyalty > 65) {
+        nation.treasury += c.competence * 0.02;
+      } else if (c.loyalty < 30) {
+        nation.stability = clamp(nation.stability - 0.3, 0, 100);
+        if (nation.factions.length && rng.chance(0.1)) {
+          const friend = [...nation.factions].sort(
+            (x, y) => Math.abs(x.ideology.planned - c.ideology.planned) - Math.abs(y.ideology.planned - c.ideology.planned),
+          )[0];
+          friend.seats = Math.min(70, friend.seats + 1);
+          const other = nation.factions.find((f) => f !== friend && f.seats > 5);
+          if (other) other.seats -= 1;
+          if (isPlayer) state.digest.push(`${c.name} is quietly bankrolling the ${friend.name}.`);
+          c.log.push({ turn: state.turn, text: `Funded the ${friend.name} against the government.` });
+        }
+      }
+    }
+
     // I1 — a deeply disloyal minister leaks (quiet drag, occasionally loud)
     for (const post of ['foreign', 'economy', 'defense', 'interior'] as const) {
       const id = nation.ministers[post];

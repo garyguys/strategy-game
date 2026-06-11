@@ -675,10 +675,11 @@ function menu(app: App): HTMLElement {
     head('Accord 1936', 'working title — menu'),
     h('p', { class: 'sub', text: `Campaign: ${s.nations[s.playerId].name}, ${dateLabel(s.turn)}. Legacy so far: prestige ${legacy.prestige}, prosperity ${legacy.prosperity}, liberty ${legacy.liberty}.` }),
     h('h3', { text: 'Saves' }),
+    s.ledgerMode ? h('p', { class: 'sub', text: 'Ledger Mode is on: the campaign lives in its single rolling save. Export and import are sealed.' }) : '',
     h('div', { class: 'row wrap' },
-      h('button', { class: 'btn small', text: 'Export save file', onclick: () => exportSave(s) }),
+      h('button', { class: 'btn small', text: 'Export save file', disabled: s.ledgerMode, onclick: () => exportSave(s) }),
       h('button', {
-        class: 'btn small', text: 'Import save file',
+        class: 'btn small', text: 'Import save file', disabled: s.ledgerMode,
         onclick: () => {
           const input = h('input', { type: 'file', accept: '.json' });
           input.addEventListener('change', async () => {
