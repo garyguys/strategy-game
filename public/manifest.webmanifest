@@ -1,0 +1,10 @@
+{
+  "name": "Accord 1936",
+  "short_name": "Accord 1936",
+  "description": "A diplomacy-first grand strategy game set in an alternate 1936.",
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#efe6cf",
+  "theme_color": "#e7ddc4"
+}
